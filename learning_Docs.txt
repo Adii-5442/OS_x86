@@ -1,0 +1,36 @@
+Operating System - DOCS
+
+```
+$ - For current address
+$$ - For address of the current sector
+```
+
+DEFINITIONS:
+- Segment: A segment value is a 16-bit value used to identify a segment of memory. A segment is a contiguous block of memory for storing specific types of data, such as code or data. The segment value specifies which segment of memory the location belongs to.
+
+- Offset Value: An offset value is a 32-bit value used to specify the memory location's offset within a segment. This offset value is added to the base address of the segment to determine the actual memory location.
+
+MEMORY SEGMENTATION:
+```
+0X1234 : 0x5678
+segment : offset
+```
+- The memory location at segment 0x1000 with an offset of 0x100 would be located at memory address 0x10100.
+- Both are of 16 bits of memory.
+- Each segment consists of 64 bytes of memory, where each byte can be accessed by an offset value.
+- Segments overlap by 16 bytes.
+- Therefore, real_address = segment * 16 + offset
+
+Expanded information about why we multiply by 16:
+
+- Segment Size: In the Intel 8086 architecture, a segment was a 16-bit value, capable of representing a range of 65,536 (2^16) memory locations.
+
+- Offset Size: The offset was also a 16-bit value, representing a specific location within the segment.
+
+- Address Calculation: To calculate the physical memory address, the processor combined the segment and offset values. Without the multiplication by 16, you'd simply add the segment and offset together. However, this would lead to overlapping addresses.
+
+   For example, consider two addresses: Segment = 1000 (hexadecimal 3E8) and Offset = 0010 (hexadecimal 10). If you added them directly, you'd get 3E8 + 10, which equals 3F8. But what if you had another address with Segment = 3F8 and Offset = 0001? You'd end up with the same physical address (3F8) for different memory locations.
+
+- Multiplying to Avoid Overlap: By multiplying the segment value by 16 (or shifting it left by 4 bits), you effectively "expand" the segment so that it covers a larger address space without overlapping with adjacent segments. In the first example above, if you multiply the Segment by 16 (3E8 * 16), you get 3E80. Now, when you add the Offset (0010), you get 3E80 + 0010, which correctly points to a different memory location than the one with Segment = 3F8.
+
+So, the multiplication by 16 was a way to prevent segments from overlapping and ensure that each combination of Segment and Offset referred to a unique memory location within the overall address space. While this approach may seem unusual from a modern perspective, it was a practical solution given the limitations of early x86 processors and the need to efficiently manage memory within those constraints.
