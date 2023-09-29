@@ -8,8 +8,6 @@ bits 16
 start:
 	jmp main
 
-
-
 ;Prints a string to the screen.
 ;Params:
 ;	-ds:si points to the string
@@ -24,7 +22,7 @@ puts:
 	or al,al	;verify if next character is Null (taking bitwise or of al with al to check for nullability)
 	jz .done
 
-	mov ah,0x0e ;call bios interrupt
+	mov ah,0x0e ;call bios interrupt (INT 10H - for video interrupt)
 	int 0x10
 
 	jmp .loop

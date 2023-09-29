@@ -57,8 +57,28 @@ Ex-1 :
 array: dw 100,200,300   (dw- double word)
 	mov bx,array		(stored start address of bx)
 	mov si,2*2			(stored 2*2 = 4 in source Index)
-	mov ax,[bx+si]		(stored [bx+4] ie [arr+4] in ax, Now as these are double words(16 bits each) they are of 2 Bytes, hence 300 wud be stored inside the ax as we're moving 4 addresses ahead from base(arr) address.
+	mov ax,[bx+si]		(stored [bx+4] ie [arr+4] in ax, Now as these are double words(16 bits each) they are of 2 Bytes, hence 300 wud be stored inside the ax as we're moving 4 addresses ahead from base(arr) address)
 
 
+Examples of BIOS interrupts:
 
-  
+INT 10h -- Video
+INT 11h -- Equipment check
+INT 12h -- Memory size
+INT 13h -- Disk I/O
+INT 14h -- Serial communication
+INT 15h -- Cassette
+INT 16h -- Keyboard
+
+**VIDEO - TELETYPE OUTPUT**
+
+AH = 0Eh
+AL = character to write
+BH = page number
+BL = foreground color (graphics modes only)
+
+Return:
+Nothing
+
+Desc: Display a character on the screen, advancing the cursor and scrolling the screen as necessary.
+
